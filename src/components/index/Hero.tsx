@@ -57,7 +57,7 @@ const Hero = () => {
           </div>
           <div className="md:w-1/2 lg:w-1/3 mt-8 md:mt-0">
             <img
-              src="https://www.mydevify.com/assets/index.494ac568.png"
+              src="/images/Orange_Car.png"
               alt="Hero Image"
               className="rounded-lg shadow-lg"
             />
