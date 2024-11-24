@@ -11,7 +11,6 @@ const IndexNav = () => {
     }
 
     const [Settings, setSettings] = useState<settings | null>(null);
-
     useEffect(() => {
         
     }, []);
@@ -48,10 +47,8 @@ const IndexNav = () => {
                     <a className="btn btn-ghost text-xl">{Settings?.sitename ?? 'Louer Maintenant'}</a>
                 </div>
                 <div className="navbar-end">
-
                     <ThemeToggle />
-                    <span className="loading loading-ring loading-lg"></span>
-
+                    {/* <span className="loading loading-ring loading-lg"></span> */}
                     <div className="flex items-center gap-2 text-sm">
                         <Image src="/img/login.png" alt="" width={20} height={20} />
                         <Link href="/sign-in">Login/Register</Link>
