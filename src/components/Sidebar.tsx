@@ -16,14 +16,14 @@ const Sidebar = () => {
             {/* Logo and Site Name */}
             <li className="mb-2 font-semibold text-xl">
               <Link href="/">
-                <img
+                {/* <img
                   src="/icon.png"
                   alt="Reantia by MyDevify.com"
                   width={30}
                   height={30}
                   className="inline-block mr-2"
-                />
-                MyDevify.com
+                /> */}
+               Home
               </Link>
             </li>
 
