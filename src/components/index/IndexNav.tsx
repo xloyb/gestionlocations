@@ -44,7 +44,7 @@ const IndexNav = () => {
 
                 </div>
                 <div className="navbar-center">
-                    <a className="btn btn-ghost text-xl">{Settings?.sitename ?? 'Louer Maintenant'}</a>
+                    <a className="btn btn-ghost text-xl">{Settings?.sitename ?? 'Reantia'}</a>
                 </div>
                 <div className="navbar-end">
                     <ThemeToggle />
