@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Depot {
+  id         Int         @id @default(autoincrement())
+  code       String      @unique
+  address    String
+  phone      String
+  fax        String
+  managerId  Int         @unique
+  manager    User        @relation(fields: [managerId], references: [id])
+  equipments Equipment[]
+  contracts  Contract[]
+}
+
+model Equipment {
+  id           Int          @id @default(autoincrement())
+  code         String       @unique
+  name         String
+  categoryId   Int
+  category     Category     @relation(fields: [categoryId], references: [id])
+  state        EquipmentState
+  capacity     Float
+  dailyPrice   Float
+  depotId      Int
+  depot        Depot        @relation(fields: [depotId], references: [id])
+  contracts    Contract[]
+
+  Supplier Supplier[]
+
+  ContractEquipment ContractEquipment[]
+}
+
+model Category {
+  id          Int          @id @default(autoincrement())
+  code        String       @unique
+  designation String
+  equipments  Equipment[]
+}
+
+model Supplier {
+  id         Int      @id @default(autoincrement())
+  code       String   @unique
+  name       String
+  surname    String
+  address    String
+  phone      String
+  fax        String
+  email      String
+  equipments Equipment[]
+}
+
+model Client {
+  id             Int          @id @default(autoincrement())
+  name           String
+  surname        String
+  address        String
+  phone          String
+  fiscalNumber   String
+  fax            String
+  email          String
+  contracts      Contract[]
+}
+
+model Contract {
+  id            Int             @id @default(autoincrement())
+  number        String          @unique
+  date          DateTime
+  clientId      Int
+  client        Client          @relation(fields: [clientId], references: [id])
+  depotId       Int
+  depot         Depot           @relation(fields: [depotId], references: [id])
+  equipments    ContractEquipment[]
+  totalAmount   Float
+  status        ContractStatus
+
+  Equipment Equipment[]
+}
+
+model ContractEquipment {
+  id             Int       @id @default(autoincrement())
+  contractId     Int
+  contract       Contract  @relation(fields: [contractId], references: [id])
+  equipmentId    Int
+  equipment      Equipment @relation(fields: [equipmentId], references: [id])
+  rentalDays     Int
+  price          Float
+}
+
+
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String
+  name    String?
+  avatar  String?
+  cover   String?
+  role    String   @default("user") // Default value
+    Depot Depot[]
+
+}
+
+enum EquipmentState {
+  NEW
+  USED
+  DAMAGED
+}
+
+enum ContractStatus {
+  ACTIVE
+  CANCELLED
+  COMPLETED
+}
+
+enum UserRole {
+  DIRECTOR
+  MANAGER
+}
