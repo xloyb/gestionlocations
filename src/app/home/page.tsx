@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import Layout1 from '@/components/Layout'
 
