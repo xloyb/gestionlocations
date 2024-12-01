@@ -28,7 +28,7 @@ const Sidebar = () => {
             </li>
 
             {/* Categories Section */}
-            <>chi5 xLoy was here</>
+            
           </ul>
         </div>
       </div>

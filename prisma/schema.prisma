@@ -13,11 +13,12 @@ model Depot {
   address    String
   phone      String
   fax        String
-  managerId  Int         @unique
+  managerId  String      // Change to String to match User.id
   manager    User        @relation(fields: [managerId], references: [id])
-  equipments Equipment[]
-  contracts  Contract[]
+  equipments Equipment[] // One-to-many relationship
+  contracts  Contract[]  // One-to-many relationship
 }
+
 
 model Equipment {
   id           Int          @id @default(autoincrement())
@@ -30,18 +31,15 @@ model Equipment {
   dailyPrice   Float
   depotId      Int
   depot        Depot        @relation(fields: [depotId], references: [id])
-  contracts    Contract[]
-
-  Supplier Supplier[]
-
-  ContractEquipment ContractEquipment[]
+  suppliers    Supplier[]   // Many-to-many relationship with Supplier
+  contractEquipments ContractEquipment[] // Many-to-many relationship with Contract
 }
 
 model Category {
   id          Int          @id @default(autoincrement())
   code        String       @unique
   designation String
-  equipments  Equipment[]
+  equipments  Equipment[]  // One-to-many relationship
 }
 
 model Supplier {
@@ -53,7 +51,7 @@ model Supplier {
   phone      String
   fax        String
   email      String
-  equipments Equipment[]
+  equipments Equipment[] // Many-to-many relationship with Equipment
 }
 
 model Client {
@@ -65,7 +63,7 @@ model Client {
   fiscalNumber   String
   fax            String
   email          String
-  contracts      Contract[]
+  contracts      Contract[]   // One-to-many relationship with Contract
 }
 
 model Contract {
@@ -76,11 +74,9 @@ model Contract {
   client        Client          @relation(fields: [clientId], references: [id])
   depotId       Int
   depot         Depot           @relation(fields: [depotId], references: [id])
-  equipments    ContractEquipment[]
+  equipments    ContractEquipment[] // Many-to-many relationship with Equipment
   totalAmount   Float
-  status        ContractStatus
-
-  Equipment Equipment[]
+  status        ContractStatus  // Enum for contract status
 }
 
 model ContractEquipment {
@@ -93,17 +89,13 @@ model ContractEquipment {
   price          Float
 }
 
-
-
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String
+  id      String   @id
+  email   String   @unique
   name    String?
-  avatar  String?
-  cover   String?
-  role    String   @default("user") // Default value
-    Depot Depot[]
-
+  avatar  String?  // Added field for avatar
+  cover   String?  // Added field for cover
+  depots  Depot[]  // One-to-many relationship with Depot
 }
 
 enum EquipmentState {

@@ -5,10 +5,9 @@ CREATE TABLE `Depot` (
     `address` VARCHAR(191) NOT NULL,
     `phone` VARCHAR(191) NOT NULL,
     `fax` VARCHAR(191) NOT NULL,
-    `managerId` INTEGER NOT NULL,
+    `managerId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Depot_code_key`(`code`),
-    UNIQUE INDEX `Depot_managerId_key`(`managerId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -93,12 +92,13 @@ CREATE TABLE `ContractEquipment` (
 
 -- CreateTable
 CREATE TABLE `User` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `username` VARCHAR(191) NOT NULL,
-    `password` VARCHAR(191) NOT NULL,
-    `role` ENUM('DIRECTOR', 'MANAGER') NOT NULL,
+    `id` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NULL,
+    `avatar` VARCHAR(191) NULL,
+    `cover` VARCHAR(191) NULL,
 
-    UNIQUE INDEX `User_username_key`(`username`),
+    UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -109,15 +109,6 @@ CREATE TABLE `_EquipmentToSupplier` (
 
     UNIQUE INDEX `_EquipmentToSupplier_AB_unique`(`A`, `B`),
     INDEX `_EquipmentToSupplier_B_index`(`B`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `_ContractToEquipment` (
-    `A` INTEGER NOT NULL,
-    `B` INTEGER NOT NULL,
-
-    UNIQUE INDEX `_ContractToEquipment_AB_unique`(`A`, `B`),
-    INDEX `_ContractToEquipment_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
@@ -146,9 +137,3 @@ ALTER TABLE `_EquipmentToSupplier` ADD CONSTRAINT `_EquipmentToSupplier_A_fkey` 
 
 -- AddForeignKey
 ALTER TABLE `_EquipmentToSupplier` ADD CONSTRAINT `_EquipmentToSupplier_B_fkey` FOREIGN KEY (`B`) REFERENCES `Supplier`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_ContractToEquipment` ADD CONSTRAINT `_ContractToEquipment_A_fkey` FOREIGN KEY (`A`) REFERENCES `Contract`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_ContractToEquipment` ADD CONSTRAINT `_ContractToEquipment_B_fkey` FOREIGN KEY (`B`) REFERENCES `Equipment`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
